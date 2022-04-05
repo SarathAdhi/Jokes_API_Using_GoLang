@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            margin: 0px;
+            background-color: aquamarine;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .section {
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .show-btn {
+            display: none;
+        }
+
+        .jokes {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .show-answer {
+            display: none;
+            font-size: 20px;
+        }
+
+        .show-answer-block {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="section">
+        <h1>Get Random Jokes using API made using GoLang</h1>
+        <button class="btn" onclick="getJokes()">Get a random joke</button>
+        <p class="jokes"></p>
+        <p class="show-answer"></p>
+        <button class="show-btn" onclick="showAnswer()">Show Answer</button>
+    </section>
+</body>
+<script>
+    function getJokes() {
+        var currentURL = window.location.href
+        fetch(currentURL + 'jokes')
+            .then(res => res.json())
+            .then(data => {
+                var random = Math.floor(Math.random() * data.length);
+                document.querySelector(".jokes").innerHTML = data[random].question
+                document.querySelector(".show-answer").innerHTML = data[random].answer
+                document.querySelector(".show-btn").style.display = 'block'
+            })
+    }
+    let state = true
+    function showAnswer() {
+        if (state) {
+            document.querySelector(".show-btn").innerHTML = "Hide Answer"
+            state = !state
+        }
+        else {
+            document.querySelector(".show-btn").innerHTML = "Show Answer"
+            state = !state
+        }
+
+        document.querySelector(".show-answer").classList.toggle("show-answer-block")
+    }
+</script>
+
+</html>
